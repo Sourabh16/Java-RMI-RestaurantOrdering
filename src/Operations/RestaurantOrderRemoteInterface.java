@@ -1,6 +1,7 @@
 package Operations;
 
 import pojo.menuDetails;
+import pojo.order;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -16,4 +17,6 @@ public interface RestaurantOrderRemoteInterface extends Remote {
     Map<String, ArrayList<menuDetails>> loadDropDown(String mealType) throws RemoteException;
 
     void insertOrderDataToDB(String toogleGroupValue, String customerName, String custTableNumber, String selectedItem, String FoodItem) throws RemoteException;
+
+    ArrayList<order> getWaitingList() throws RemoteException;
 }

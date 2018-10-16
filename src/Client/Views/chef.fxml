@@ -22,8 +22,8 @@
 
          </children>
       </AnchorPane>
-      <Button fx:id="BTPrepare" layoutX="472.0" layoutY="343.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Prepare" />
-      <Button fx:id="BTquit" layoutX="680.0" layoutY="343.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Refresh" />
+      <Button fx:id="BTPrepare" layoutX="472.0" layoutY="343.0"  mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Prepare" />
+      <Button fx:id="BTquit" layoutX="680.0" layoutY="343.0" onAction="#validateEntry" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Refresh" />
       <Button fx:id="BTquit1" layoutX="873.0" layoutY="343.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Quit" />
    </children>
 </AnchorPane>

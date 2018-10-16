@@ -3,6 +3,7 @@ package Operations;
 import Operations.Client.Utility.DBConnect;
 import Utility.ReadCSV;
 import pojo.menuDetails;
+import pojo.order;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -102,6 +103,27 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
         insertStmt = "INSERT INTO Orders(OrderID,FoodName,BeverageName,orderStatus)" +
                 "VALUES('" + OrderID + "','" + selectedFoodItem + "','" + selectedBeverageItem + "',0);";
         db.dbconnectExecute(insertStmt);
+}
+
+    @Override
+    public ArrayList<order> getWaitingList() throws RemoteException {
+        ArrayList<order> temp=new ArrayList<order>();
+        try {
+            DBConnect db = new DBConnect();
+            String query="SELECT c.cusName, c.cusTable, o.FoodName,o.BeverageName, o.orderStatus, o.OrderID FROM Orders o, customerDetails c where orderStatus='0' AND cusID=OrderID";
+            ResultSet rs=db.getData(query);
+
+
+            while(rs.next()) {
+                order order1=new order(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+                temp.add(order1);
+            }
+        } catch (Exception e) {
+            System.out.println("Exception:"+e.toString());
+        }
+
+        System.out.println(">>>>>>"+temp.get(1).getBeverageName());
+        return temp;
     }
 
     public void initialDBUpload() throws SQLException {
