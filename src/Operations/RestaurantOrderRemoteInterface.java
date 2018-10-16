@@ -21,5 +21,7 @@ public interface RestaurantOrderRemoteInterface extends Remote {
 
     void insertOrderDataToDB(String toogleGroupValue, String customerName, String custTableNumber, String selectedItem, String FoodItem) throws RemoteException;
 
-    ArrayList<order> getWaitingList() throws RemoteException;
+    ArrayList<order> getWaitingList(String statusValue) throws RemoteException;
+
+    void updateOrderStatus(String selectedOrderId, String updateValue) throws RemoteException;
 }

@@ -1,6 +1,11 @@
 package pojo;
 
-public class order {
+import java.io.Serializable;
+import java.util.Comparator;
+
+public class order implements Serializable , Comparator<String> {
+
+    private static final long serialVersionUID = 1L;
 
     private String cusName;
     private String TableNum;
@@ -8,18 +13,6 @@ public class order {
     private String BeverageName;
     private String orderId;
     private String orderStatus;
-
-    @Override
-    public String toString() {
-        return "order{" +
-                "cusName='" + cusName + '\'' +
-                ", TableNum='" + TableNum + '\'' +
-                ", FoodName='" + FoodName + '\'' +
-                ", BeverageName='" + BeverageName + '\'' +
-                ", orderId='" + orderId + '\'' +
-                ", orderStatus='" + orderStatus + '\'' +
-                '}';
-    }
 
     public order() {
     }
@@ -32,6 +25,7 @@ public class order {
         this.orderId = orderId;
         this.orderStatus = orderStatus;
     }
+
 
     public String getCusName() {
         return cusName;
@@ -80,5 +74,28 @@ public class order {
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
     }
+
+
+    @Override
+    public String toString() {
+        return "customerName='" + cusName + '\'' +
+                ", | TableNo='" + TableNum + '\'' +
+                ", | Food='" + FoodName + '\'' +
+                ", | Beverage='" + BeverageName + '\'' +
+                ", | orderId='" + orderId + '\'';
+    }
+
+    @Override
+    public int compare(String o1, String o2) {
+        if (o1 == o2) {
+            return 0;
+        }
+        if (o1 == null) {
+            return -1;
+        }
+        if (o2 == null) {
+            return 1;
+        }
+        return o1.compareTo(o2);    }
 }
 

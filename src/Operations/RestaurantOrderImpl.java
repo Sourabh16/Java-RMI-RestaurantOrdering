@@ -168,27 +168,39 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
         insertStmt = "INSERT INTO Orders(OrderID,FoodName,BeverageName,orderStatus)" +
                 "VALUES('" + OrderID + "','" + selectedFoodItem + "','" + selectedBeverageItem + "',0);";
         db.dbconnectExecute(insertStmt);
-}
+    }
 
     @Override
-    public ArrayList<order> getWaitingList() throws RemoteException {
-        ArrayList<order> temp=new ArrayList<order>();
+    public ArrayList<order> getWaitingList(String statusValue) throws RemoteException {
+        ArrayList<order> temp = new ArrayList<>();
         try {
             DBConnect db = new DBConnect();
-            String query="SELECT c.cusName, c.cusTable, o.FoodName,o.BeverageName, o.orderStatus, o.OrderID FROM Orders o, customerDetails c where orderStatus='0' AND cusID=OrderID";
-            ResultSet rs=db.getData(query);
+            String query = "SELECT c.cusName, c.cusTable, o.FoodName,o.BeverageName, o.OrderID, o.orderStatus" +
+                    "  FROM Orders o, customerDetails c where orderStatus='"+statusValue+"' AND cusID=OrderID";
+            ResultSet rs = db.getData(query);
 
 
-            while(rs.next()) {
-                order order1=new order(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+            while (rs.next()) {
+                order order1 = new order(rs.getString(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getString(6));
                 temp.add(order1);
             }
         } catch (Exception e) {
-            System.out.println("Exception:"+e.toString());
+            System.out.println("Exception:" + e.toString());
         }
-
-        System.out.println(">>>>>>"+temp.get(1).getBeverageName());
         return temp;
+    }
+
+    @Override
+    public void updateOrderStatus(String selectedOrderId, String updateValue) {
+        try {
+            DBConnect db = new DBConnect();
+            String query = "update advjavarmi.orders set orderStatus='"+updateValue+"' where OrderID='"+selectedOrderId+"';";
+            db.setData(query);
+        } catch (Exception e) {
+            System.out.println("exception:" + e.toString());
+        }
     }
 
     public void initialDBUpload() throws SQLException {
@@ -205,8 +217,7 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
 
                 DBConnect dbConnect = new DBConnect();
 
-                String insertTableSQL = "INSERT INTO menu VALUES"
-                        + "(?,?,?,?,?,?,?,?,?,?)";
+                String insertTableSQL = "INSERT INTO menu VALUES(?,?,?,?,?,?,?,?,?,?)";
 
                 dbConnection = dbConnect.getConnection();
                 preparedStatement = dbConnection.prepareStatement(insertTableSQL);
