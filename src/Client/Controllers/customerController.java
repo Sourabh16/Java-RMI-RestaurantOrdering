@@ -24,16 +24,12 @@ import java.util.ResourceBundle;
 import static Utility.commonConstants.BEVERAGE_LIST;
 import static Utility.commonConstants.FOOD_LIST;
 
-public class customerorderController implements Initializable {
+public class customerController implements Initializable {
 
     private ToggleGroup radioGroup = new ToggleGroup();
     private RestaurantOrderRemoteInterface restaurantOrderRemoteInterface;
     @FXML
     private ComboBox<String> foodID, BeveragesID;
-    @FXML
-    private Button BTPrepare;
-    @FXML
-    private Button BTbill;
     @FXML
     private Button BTenterData, BTchoiceDisplay, BTdisplayOrder;
     @FXML
@@ -42,7 +38,6 @@ public class customerorderController implements Initializable {
     private RadioButton rdBrkfast, rdLunch, rdDinner;
     @FXML
     private TableView<menuDetails> tblDisplay;
-    private int OrderID = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -50,8 +45,6 @@ public class customerorderController implements Initializable {
 
         foodID.setDisable(true);
         BeveragesID.setDisable(true);
-        BTPrepare.setDisable(true);
-        BTbill.setDisable(true);
         BTdisplayOrder.setDisable(true);
         //cusTable.setDisable(true);
         //Toggle Menu
@@ -60,8 +53,6 @@ public class customerorderController implements Initializable {
         rdDinner.setToggleGroup(radioGroup);
 
         getRegistryInterface();
-
-
     }//close initialize
 
     private void getRegistryInterface() {
@@ -88,7 +79,7 @@ public class customerorderController implements Initializable {
                 value = Integer.parseInt(cusTable.getText());
             }
             if (event.getSource() == BTenterData && cusName.getText().trim().isEmpty()) {
-                System.out.printf(cusName.getText());//testing line
+                System.out.print(cusName.getText());//testing line
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter customer name : ", ButtonType.CLOSE);
                 alert.showAndWait();
             } else if (value <= 0 || value >= 9) {
@@ -178,7 +169,7 @@ public class customerorderController implements Initializable {
     @FXML
     private void loadTableData(ActionEvent event) {
         ObservableList<menuDetails> strList = FXCollections.observableArrayList();
-        ArrayList<String> orderData = new ArrayList<String>();
+        ArrayList<String> orderData = new ArrayList<>();
 
         if (event.getSource() == BTdisplayOrder) {
             DBConnect db = new DBConnect();

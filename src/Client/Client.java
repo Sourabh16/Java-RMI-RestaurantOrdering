@@ -31,7 +31,7 @@ public class Client extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Views/ClientCustomer.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Views/clCustomer.fxml"));
         primaryStage.setTitle("SwinRestaurant Order");
         primaryStage.setScene(new Scene(root, 1310, 950));
         primaryStage.show();

@@ -39,7 +39,13 @@ public class Server extends RestaurantOrderImpl {
 
             // binding or bundling or marshaling
             registry.rebind("HelloAnimation_v1", stub);
-            System.err.println("Server ready");
+            System.out.println("Server ready");
+
+
+            RestaurantOrderImpl impl=new RestaurantOrderImpl();
+            impl.clearMenuDb();
+            impl.initialDBUpload();
+
         } catch (Exception e) {
             System.err.println("Server exception: " + e.toString());
             e.printStackTrace();

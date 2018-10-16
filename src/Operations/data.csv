@@ -1,4 +1,3 @@
-MenuDesc,Meal Type,ItemName,Price (AUD),Energy(KJ),Protein (g),Carbohydrates (g),Total fat (g),Dietary fibre (g),Menu_Item_ID
 food,BreakFast,Egg scrambled,3,594,10.9,1.9,10.2,0,124
 food,BreakFast,Egg fried,3,745,13.6,0.3,13.7,0,125
 food,BreakFast,Muesli commercial toasted added nuts,4,1835,12.8,4.1,21.7,8.9,126

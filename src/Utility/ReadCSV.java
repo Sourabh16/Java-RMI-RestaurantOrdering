@@ -1,4 +1,4 @@
-package Client.Utility;
+package Utility;
 
 
 import javafx.collections.FXCollections;
@@ -11,21 +11,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static Utility.commonConstants.SRC_OPERATIONS_DATA_CSV_FILE_PATH;
+
 
 public class ReadCSV {
 
-    public ArrayList<menuDetails> csvqueryDropDownList() {
+
+    public ArrayList<menuDetails> csvQueryDropDownList() {
 
         ArrayList<menuDetails> strList = new ArrayList<>();
-        String csvFile = "src/Operations/data.csv";
         String line;
         String cvsSplitBy = ",";
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(SRC_OPERATIONS_DATA_CSV_FILE_PATH))) {
 
             while ((line = br.readLine()) != null) {
                 // use comma as separator
                 String[] food = line.split(cvsSplitBy);
-                System.out.println("food:"+ Arrays.toString(food));
+                System.out.println("food:" + Arrays.toString(food));
 
                 menuDetails menuDesc = new menuDetails(food[0], food[1], food[2],
                         food[3], food[4], food[5], food[6], food[7], food[8], food[9]);
@@ -37,6 +39,8 @@ public class ReadCSV {
         }
         return strList;
     }
+
+
 
     public ObservableList<String> csvqueryLoadTableData(String Food, String Beverage) {
 
