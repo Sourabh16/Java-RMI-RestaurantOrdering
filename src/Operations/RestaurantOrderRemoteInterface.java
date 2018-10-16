@@ -16,5 +16,7 @@ public interface RestaurantOrderRemoteInterface extends Remote {
 
     Map<String, ArrayList<menuDetails>> getDisplayChoiceData(String selectedItem, String item) throws RemoteException;
 
+    ArrayList<menuDetails> getDisplayOrderData(String customerName, String tableNumber) throws RemoteException;
+
     void insertOrderDataToDB(String toogleGroupValue, String customerName, String custTableNumber, String selectedItem, String FoodItem) throws RemoteException;
 }

@@ -52,7 +52,7 @@
          </children>
       </AnchorPane>
       <Button fx:id="BTchoiceDisplay" layoutX="131.0" layoutY="588.0" mnemonicParsing="false" onAction="#displayChoicesOperation" text="Display Choices" />
-      <Button fx:id="BTdisplayOrder" layoutX="466.0" layoutY="588.0" mnemonicParsing="false" onAction="#loadTableData" text="Display order" />
+      <Button fx:id="BTdisplayOrder" layoutX="466.0" layoutY="588.0" mnemonicParsing="false" onAction="#displayOrderData" text="Display order" />
       <Button fx:id="BTenterData" layoutX="299.0" layoutY="588.0" mnemonicParsing="false" onAction="#validateName" text="Enter Data" />
       <Button fx:id="BTgetDropDown" layoutX="131.0" layoutY="635.0" mnemonicParsing="false" onAction="#validateDisplay" text="get dropdown" />
    </children>

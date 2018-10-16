@@ -24,6 +24,14 @@ public class menuDetails implements Serializable {
     public menuDetails() {
     }
 
+    public menuDetails(String menuDesc, String mealType, String itemName, String price, String energy) {
+        MenuDesc = menuDesc;
+        this.mealType = mealType;
+        ItemName = itemName;
+        Price = price;
+        Energy = energy;
+    }
+
     public String getMenuDesc() {
         return MenuDesc;
     }

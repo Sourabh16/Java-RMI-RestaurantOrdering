@@ -44,7 +44,7 @@ public class customerController implements Initializable {
 
         foodID.setDisable(true);
         BeveragesID.setDisable(true);
-        BTdisplayOrder.setDisable(true);
+//        BTdisplayOrder.setDisable(true);
         //cusTable.setDisable(true);
         //Toggle Menu
         rdBrkfast.setToggleGroup(radioGroup);
@@ -218,8 +218,48 @@ public class customerController implements Initializable {
 
     //load data to table
     @FXML
-    private void loadTableData(ActionEvent event) {
+    private void displayOrderData(ActionEvent event) {
+        try {
+            if (event.getSource() == BTdisplayOrder) {
 
+                tblDisplay.getColumns().clear();
+                tblDisplay.getItems().clear();
+
+                ArrayList<menuDetails> tempList;
+                ObservableList<menuDetails> outputList = FXCollections.observableArrayList();
+
+
+                tempList = restaurantOrderRemoteInterface.getDisplayOrderData(cusName.getText().trim(), cusTable.getText().trim());
+
+                outputList.addAll(tempList);
+
+                tblDisplay.setEditable(true);
+
+
+                TableColumn<menuDetails, String> ItemNameCol = new TableColumn<>("Customer Name");
+                ItemNameCol.setMinWidth(200);
+                ItemNameCol.setCellValueFactory(new PropertyValueFactory<>("MenuDesc"));
+                TableColumn<menuDetails, String> EnergyCol = new TableColumn<>("Table Number");
+                EnergyCol.setMinWidth(200);
+                EnergyCol.setCellValueFactory(new PropertyValueFactory<>("mealType"));
+                TableColumn<menuDetails, String> ProtienCol = new TableColumn<>("Ordered Food");
+                ProtienCol.setMinWidth(200);
+                ProtienCol.setCellValueFactory(new PropertyValueFactory<>("ItemName"));
+                TableColumn<menuDetails, String> CarbohydrateCol = new TableColumn<>("Ordered Beverage");
+                CarbohydrateCol.setMinWidth(200);
+                CarbohydrateCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
+                TableColumn<menuDetails, String> TotalFatCol = new TableColumn<>("order Id");
+                TotalFatCol.setMinWidth(200);
+                TotalFatCol.setCellValueFactory(new PropertyValueFactory<>("Energy"));
+
+
+                tblDisplay.setItems(outputList);
+                tblDisplay.setVisible(true);
+                tblDisplay.getColumns().addAll(ItemNameCol, EnergyCol, ProtienCol, CarbohydrateCol, TotalFatCol);
+            }
+        } catch (Exception e) {
+            System.out.println("exception:" + e.toString());
+        }
     }
 }
 

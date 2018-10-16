@@ -71,7 +71,7 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
             if (rsBeverage.next()) {
                 menuDetails menuBeverageDetails = new menuDetails(rsBeverage.getString(1), rsBeverage.getString(2)
                         , rsBeverage.getString(3), rsBeverage.getString(4), rsBeverage.getString(5),
-                        rsBeverage.getString(6),rsBeverage.getString(7),
+                        rsBeverage.getString(6), rsBeverage.getString(7),
                         rsBeverage.getString(8), rsBeverage.getString(9), rsBeverage.getString(10));
                 tempBeverageList.add(menuBeverageDetails);
             }
@@ -82,6 +82,30 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
             e.printStackTrace();
         }
         return tempMap;
+    }
+
+    @Override
+    public ArrayList<menuDetails> getDisplayOrderData(String customerName, String tableNumber) throws RemoteException {
+        ArrayList<menuDetails> tempDisplayOrderList = new ArrayList<>();
+
+        try {
+            DBConnect db = new DBConnect();
+
+            String statement = "SELECT c.cusName, c.cusTable, o.FoodName,o.BeverageName, o.OrderID FROM Orders o, customerDetails c " +
+                    "where cusID=OrderID and cusTable=" + tableNumber + " and cusName='" + customerName + "'; ";
+
+            ResultSet rs = db.getData(statement);
+
+            while (rs.next()) {
+                menuDetails order = new menuDetails(rs.getString(1).trim(), rs.getString(2).trim(),
+                        rs.getString(3).trim(),
+                        rs.getString(4).trim(), rs.getString(5).trim());
+                tempDisplayOrderList.add(order);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tempDisplayOrderList;
     }
 
     /**
