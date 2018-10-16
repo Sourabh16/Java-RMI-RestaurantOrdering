@@ -6,21 +6,23 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ListView?>
 
-<AnchorPane fx:id="cusDashboard" prefHeight="746.0" prefWidth="1214.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controllers.customerorderController">
+<AnchorPane fx:id="cusDashboard" prefHeight="746.0" prefWidth="1214.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controllers.receptionistController">
    <children>
       <AnchorPane fx:id="cusStatus" layoutX="18.0" layoutY="22.0" prefHeight="224.0" prefWidth="1130.0" style="-fx-border-color: black;">
          <children>
-            <Label layoutX="14.0" layoutY="21.0">
-               <font>
-                  <Font name="System Bold Italic" size="14.0" />
-               </font>
-            </Label>
-            <TextArea layoutX="39.0" layoutY="70.0" prefHeight="132.0" prefWidth="429.0" />
-            <Label layoutX="39.0" layoutY="33.0" prefHeight="25.0" prefWidth="328.0" text="Orders with serving State">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font></Label>
+
+                 <Label layoutX="14.0" layoutY="21.0" text="Order Status">
+                     <font>
+                         <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                 </Label>
+
+                 <Label layoutX="227.0" layoutY="61.0" text="Orders with Serving State" />
+                 <ListView fx:id="servingListView" layoutX="71.0" layoutY="88.0" prefHeight="124.0" prefWidth="445.0" />
+
+
          </children>
       </AnchorPane>
       <AnchorPane fx:id="cusChoiceInfo" layoutX="18.0" layoutY="269.0" prefHeight="162.0" prefWidth="1137.0" style="-fx-border-color: black;">

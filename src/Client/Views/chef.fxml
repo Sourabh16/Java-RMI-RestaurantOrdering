@@ -5,8 +5,9 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ListView?>
 
-<AnchorPane fx:id="cusDashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="934.0" prefWidth="1304.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controllers.customerorderController">
+<AnchorPane fx:id="cusDashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="934.0" prefWidth="1304.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controllers.chefController">
    <children>
       <AnchorPane fx:id="cusStatus" layoutX="14.0" layoutY="31.0" prefHeight="260.0" prefWidth="1232.0" style="-fx-border-color: black;">
          <children>
@@ -15,10 +16,10 @@
                   <Font name="System Bold Italic" size="14.0" />
                </font>
             </Label>
-            <TextArea layoutX="41.0" layoutY="78.0" prefHeight="132.0" prefWidth="522.0" />
+
             <Label layoutX="227.0" layoutY="61.0" text="Orders with Waiting State" />
-            <TextArea layoutX="638.0" layoutY="78.0" prefHeight="132.0" prefWidth="522.0" />
-            <Label layoutX="838.0" layoutY="61.0" text="Orders with serving State" />
+            <ListView fx:id="waitingListView" layoutX="71.0" layoutY="88.0" prefHeight="124.0" prefWidth="445.0" />
+
          </children>
       </AnchorPane>
       <Button fx:id="BTPrepare" layoutX="472.0" layoutY="343.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Prepare" />
