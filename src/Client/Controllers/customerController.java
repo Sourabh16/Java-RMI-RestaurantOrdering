@@ -1,8 +1,6 @@
 package Client.Controllers;
 
-import Operations.Client.Utility.DBConnect;
 import Operations.RestaurantOrderRemoteInterface;
-import Utility.ReadCSV;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,13 +29,14 @@ public class customerController implements Initializable {
     @FXML
     private ComboBox<String> foodID, BeveragesID;
     @FXML
-    private Button BTenterData, BTchoiceDisplay, BTdisplayOrder;
+    private Button BTenterData, BTchoiceDisplay, BTdisplayOrder, BTgetDropDown;
     @FXML
     private TextField cusName, cusTable;
     @FXML
     private RadioButton rdBrkfast, rdLunch, rdDinner;
     @FXML
     private TableView<menuDetails> tblDisplay;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -113,7 +112,7 @@ public class customerController implements Initializable {
     @FXML
     private void validateDisplay(ActionEvent event) {
         try {
-            if (event.getSource() == BTchoiceDisplay) {
+            if (event.getSource() == BTgetDropDown) {
                 ObservableList<String> drFood = FXCollections.observableArrayList();        // observableList for food drop down
                 ObservableList<String> drBeverage = FXCollections.observableArrayList();    // observableList for food drop down
                 if (rdBrkfast.isSelected()) {
@@ -129,6 +128,58 @@ public class customerController implements Initializable {
                 }
             }
         } catch (RemoteException e) {
+            System.out.println("exception:" + e.toString());
+        }
+    }
+
+    @FXML
+    private void displayChoicesOperation(ActionEvent event) {
+        try {
+            if (event.getSource() == BTchoiceDisplay) {
+
+//                Map<String, ArrayList<menuDetails>> strList = FXCollections.observableArrayList();
+                Map<String, ArrayList<menuDetails>> foodMap;
+                ObservableList<menuDetails> outputList = FXCollections.observableArrayList();
+
+
+                foodMap = restaurantOrderRemoteInterface.getDisplayChoiceData(foodID.getSelectionModel().getSelectedItem(), BeveragesID.getSelectionModel().getSelectedItem());
+
+                outputList.addAll(foodMap.get(FOOD_LIST));
+                outputList.addAll(foodMap.get(BEVERAGE_LIST));
+
+                tblDisplay.setEditable(true);
+
+
+                TableColumn<menuDetails, String> ItemNameCol = new TableColumn<>("Item Name");
+                ItemNameCol.setMinWidth(200);
+                ItemNameCol.setCellValueFactory(new PropertyValueFactory<>("ItemName"));
+                TableColumn<menuDetails, String> EnergyCol = new TableColumn<>("Energy");
+                EnergyCol.setMinWidth(200);
+                EnergyCol.setCellValueFactory(new PropertyValueFactory<>("Energy"));
+                TableColumn<menuDetails, String> ProtienCol = new TableColumn<>("Protein");
+                ProtienCol.setMinWidth(200);
+                ProtienCol.setCellValueFactory(new PropertyValueFactory<>("Protein"));
+                TableColumn<menuDetails, String> CarbohydrateCol = new TableColumn<>("Carbohydrates");
+                CarbohydrateCol.setMinWidth(200);
+                CarbohydrateCol.setCellValueFactory(new PropertyValueFactory<>("Carbohydrates"));
+                TableColumn<menuDetails, String> TotalFatCol = new TableColumn<>("TotalFat");
+                TotalFatCol.setMinWidth(200);
+                TotalFatCol.setCellValueFactory(new PropertyValueFactory<>("TotalFat"));
+                TableColumn<menuDetails, String> FibreCol = new TableColumn<>("DietaryFibre");
+                FibreCol.setMinWidth(200);
+                FibreCol.setCellValueFactory(new PropertyValueFactory<>("DietaryFibre"));
+                TableColumn<menuDetails, String> PriceCol = new TableColumn<>("Price");
+                PriceCol.setMinWidth(200);
+                PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
+
+                //ItemDetails IDDetail=new ItemDetails("Total",strList.get(1).getEnergy());
+
+
+                tblDisplay.setItems(outputList);
+                tblDisplay.setVisible(true);
+                tblDisplay.getColumns().addAll(ItemNameCol, EnergyCol, ProtienCol, CarbohydrateCol, TotalFatCol, FibreCol, PriceCol);
+            }
+        } catch (Exception e) {
             System.out.println("exception:" + e.toString());
         }
     }
@@ -168,48 +219,7 @@ public class customerController implements Initializable {
     //load data to table
     @FXML
     private void loadTableData(ActionEvent event) {
-        ObservableList<menuDetails> strList = FXCollections.observableArrayList();
-        ArrayList<String> orderData = new ArrayList<>();
 
-        if (event.getSource() == BTdisplayOrder) {
-            DBConnect db = new DBConnect();
-//            orderData = db.dbOrderTableData(OrderID);
-            ReadCSV rd = new ReadCSV();
-
-
-//            strList = rd.csvqueryLoadTableData(orderData.get(0), orderData.get(1));
-            tblDisplay.setEditable(true);
-
-
-            TableColumn<menuDetails, String> ItemNameCol = new TableColumn<>("Item Name");
-            ItemNameCol.setMinWidth(200);
-            ItemNameCol.setCellValueFactory(new PropertyValueFactory<>("ItemName"));
-            TableColumn<menuDetails, String> EnergyCol = new TableColumn<>("Energy");
-            EnergyCol.setMinWidth(200);
-            EnergyCol.setCellValueFactory(new PropertyValueFactory<>("Energy"));
-            TableColumn<menuDetails, String> ProtienCol = new TableColumn<>("Protien");
-            ProtienCol.setMinWidth(200);
-            ProtienCol.setCellValueFactory(new PropertyValueFactory<>("Protien"));
-            TableColumn<menuDetails, String> CarbohydrateCol = new TableColumn<>("Carbohydrate");
-            CarbohydrateCol.setMinWidth(200);
-            CarbohydrateCol.setCellValueFactory(new PropertyValueFactory<>("Carbohydrate"));
-            TableColumn<menuDetails, String> TotalFatCol = new TableColumn<>("TotalFat");
-            TotalFatCol.setMinWidth(200);
-            TotalFatCol.setCellValueFactory(new PropertyValueFactory<>("TotalFat"));
-            TableColumn<menuDetails, String> FibreCol = new TableColumn<>("Fibre");
-            FibreCol.setMinWidth(200);
-            FibreCol.setCellValueFactory(new PropertyValueFactory<>("Fibre"));
-            TableColumn<menuDetails, String> PriceCol = new TableColumn<>("Price");
-            PriceCol.setMinWidth(200);
-            PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
-
-            //ItemDetails IDDetail=new ItemDetails("Total",strList.get(1).getEnergy());
-
-
-            tblDisplay.setItems(strList);
-            tblDisplay.setVisible(true);
-            tblDisplay.getColumns().addAll(ItemNameCol, EnergyCol, ProtienCol, CarbohydrateCol, TotalFatCol, FibreCol, PriceCol);
-
-        }
     }
 }
+

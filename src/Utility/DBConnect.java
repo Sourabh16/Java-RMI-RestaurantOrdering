@@ -1,14 +1,22 @@
-package Operations.Client.Utility;
+package Utility;
 
 import java.sql.*;
 
 
 public class DBConnect {
     public static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    public static final String DB_URL = "jdbc:mysql://db4free.net/advjavarmi?useSSL=false";
 
-    public static final String USER = "swinjava";
-    public static final String PASS = "T8hs8QCP9pqcSPQ";
+    // db4net database connection
+//    public static final String DB_URL = "jdbc:mysql://db4free.net/advjavarmi?useSSL=false";
+//    public static final String USER = "swinjava";
+//    public static final String PASS = "T8hs8QCP9pqcSPQ";
+
+    // local db connection
+    public static final String DB_URL = "jdbc:mysql://localhost:3306/advjavarmi";
+    public static final String USER = "root";
+    public static final String PASS = "root";
+
+
     private static Connection c;
 
     public void dbconnectCheck() {
@@ -71,7 +79,7 @@ public class DBConnect {
      */
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         if (c == null || c.isClosed()) {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(JDBC_DRIVER);
             c = DriverManager.getConnection(DB_URL, USER, PASS);
         }
         return c;

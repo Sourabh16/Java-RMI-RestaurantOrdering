@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="cusDashboard" prefHeight="746.0" prefWidth="1214.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controllers.customerController">
+<AnchorPane fx:id="cusDashboard" prefHeight="746.0" prefWidth="1214.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controllers.customerController">
    <children>
       <AnchorPane fx:id="cusDetails" layoutX="14.0" layoutY="14.0" prefHeight="149.0" prefWidth="1130.0" style="-fx-border-color: black;">
          <children>
@@ -51,8 +51,9 @@
             <TableView fx:id="tblDisplay" layoutX="30.0" layoutY="34.0" prefHeight="200.0" prefWidth="1060.0" />
          </children>
       </AnchorPane>
-      <Button fx:id="BTchoiceDisplay" layoutX="131.0" layoutY="588.0" mnemonicParsing="false" onAction="#validateDisplay" text="Display Choices" />
+      <Button fx:id="BTchoiceDisplay" layoutX="131.0" layoutY="588.0" mnemonicParsing="false" onAction="#displayChoicesOperation" text="Display Choices" />
       <Button fx:id="BTdisplayOrder" layoutX="466.0" layoutY="588.0" mnemonicParsing="false" onAction="#loadTableData" text="Display order" />
       <Button fx:id="BTenterData" layoutX="299.0" layoutY="588.0" mnemonicParsing="false" onAction="#validateName" text="Enter Data" />
+      <Button fx:id="BTgetDropDown" layoutX="131.0" layoutY="635.0" mnemonicParsing="false" onAction="#validateDisplay" text="get dropdown" />
    </children>
 </AnchorPane>

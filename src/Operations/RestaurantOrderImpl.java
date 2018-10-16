@@ -1,6 +1,6 @@
 package Operations;
 
-import Operations.Client.Utility.DBConnect;
+import Utility.DBConnect;
 import Utility.ReadCSV;
 import pojo.menuDetails;
 
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static Operations.Client.Utility.DBConnect.*;
+import static Utility.DBConnect.*;
 import static Utility.commonConstants.*;
 
 /*
@@ -41,6 +41,47 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
     public Map<String, ArrayList<menuDetails>> loadDropDown(String mealType) {
         ReadCSV read = new ReadCSV();
         return getConsumables(read.csvQueryDropDownList(), mealType);
+    }
+
+    @Override
+    public Map<String, ArrayList<menuDetails>> getDisplayChoiceData(String selectedFoodItem, String selectedBeverageItem) throws RemoteException {
+        ArrayList<menuDetails> tempFoodList = new ArrayList<>();
+        ArrayList<menuDetails> tempBeverageList = new ArrayList<>();
+
+        Map<String, ArrayList<menuDetails>> tempMap = new HashMap<>();
+
+        try {
+            DBConnect db = new DBConnect();
+
+            String foodStatement = "SELECT * FROM menu WHERE ItemName='" + selectedFoodItem + "'";
+            String beverageStatement = "SELECT * FROM menu WHERE ItemName='" + selectedBeverageItem + "'";
+
+
+            ResultSet rs = db.getData(foodStatement);
+            ResultSet rsBeverage = db.getData(beverageStatement);
+
+            if (rs.next()) {
+                menuDetails menuDetails = new menuDetails(rs.getString(1), rs.getString(2), rs.getString(3),
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)
+                        , rs.getString(8), rs.getString(9), rs.getString(10));
+                tempFoodList.add(menuDetails);
+            }
+
+
+            if (rsBeverage.next()) {
+                menuDetails menuBeverageDetails = new menuDetails(rsBeverage.getString(1), rsBeverage.getString(2)
+                        , rsBeverage.getString(3), rsBeverage.getString(4), rsBeverage.getString(5),
+                        rsBeverage.getString(6),rsBeverage.getString(7),
+                        rsBeverage.getString(8), rsBeverage.getString(9), rsBeverage.getString(10));
+                tempBeverageList.add(menuBeverageDetails);
+            }
+
+            tempMap.put(FOOD_LIST, tempFoodList);
+            tempMap.put(BEVERAGE_LIST, tempBeverageList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tempMap;
     }
 
     /**
@@ -97,7 +138,7 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
     public void insertOrderDataToDB(String toogleGroupValue, String customerName, String custTableNumber, String selectedFoodItem, String selectedBeverageItem) {
         String insertStmt = "INSERT INTO customerDetails(cusName, cusTable,MealType)" +
                 "VALUES('" + customerName + "'," + Integer.parseInt(custTableNumber) + ",'" + toogleGroupValue + "');";
-        DBConnect db = new Operations.Client.Utility.DBConnect();
+        DBConnect db = new DBConnect();
         int OrderID = db.dbconnectExecute(insertStmt);
         insertStmt = "INSERT INTO Orders(OrderID,FoodName,BeverageName,orderStatus)" +
                 "VALUES('" + OrderID + "','" + selectedFoodItem + "','" + selectedBeverageItem + "',0);";
@@ -157,8 +198,8 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
 
     public void clearMenuDb() {
         String statement = "truncate table menu";
-        DBConnect db = new Operations.Client.Utility.DBConnect();
+        DBConnect db = new DBConnect();
         db.dbconnectExecute(statement);
-        System.out.println("db truncated");
+        System.out.println("");
     }
 }

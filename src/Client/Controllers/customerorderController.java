@@ -1,7 +1,7 @@
 package Client.Controllers;
 
-import Operations.Client.Utility.DBConnect;
 import Operations.RestaurantOrderRemoteInterface;
+import Utility.DBConnect;
 import Utility.ReadCSV;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
