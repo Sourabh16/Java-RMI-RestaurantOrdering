@@ -21,6 +21,17 @@ public class menuDetails implements Serializable {
         MenuItemID = menuItemID;
     }
 
+    public menuDetails(String itemName, String price, String energy, String protein, String carbohydrates, String totalFat, String dietaryFibre) {
+        ItemName = itemName;
+        Price = price;
+        Energy = energy;
+        Protein = protein;
+        Carbohydrates = carbohydrates;
+        TotalFat = totalFat;
+        DietaryFibre = dietaryFibre;
+
+    }
+
     public menuDetails() {
     }
 

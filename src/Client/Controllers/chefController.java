@@ -8,7 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.util.Duration;
 import pojo.order;
@@ -19,6 +21,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class chefController implements Initializable {
@@ -39,7 +42,7 @@ public class chefController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         getRegistryInterface();
-        getTimerData();
+        getTimerData(10);
 
 
     }//close initialize
@@ -57,9 +60,11 @@ public class chefController implements Initializable {
     }
 
 
-    private void getTimerData() {
+    private void getTimerData(int time) {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
+
+        timeSeconds=time;
         // KeyFrame event handler
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(1),
@@ -71,6 +76,7 @@ public class chefController implements Initializable {
 
                                     //todo comment
                                     System.out.println("dattatttttttttttttttttttttttttttt fetchd");
+                                    getTimerData(10);
                                     setArrayListData();
 
 
@@ -89,14 +95,18 @@ public class chefController implements Initializable {
         try {
             setArrayListData();
         } catch (RemoteException e) {
-            System.out.println("a");
+
         }
     }
 
     private void setArrayListData() throws RemoteException {
-        waitingListView.getItems().clear();
-        tempArrayList = restaurantOrderRemoteInterface.getWaitingList("0");
-        loadListView(tempArrayList);
+        try {
+            waitingListView.getItems().clear();
+            tempArrayList = restaurantOrderRemoteInterface.getWaitingList("0");
+            loadListView(tempArrayList);
+        } catch (RemoteException e) {
+
+        }
     }
 
     private void loadListView(ArrayList<order> list) {
@@ -110,18 +120,36 @@ public class chefController implements Initializable {
                 selectedOrderId = newValue.getOrderId();
             });
         } catch (Exception e) {
-            System.out.println("errr");
+            System.out.println("error");
         }
-        timeline.playFromStart();
+
+
     }
 
     @FXML
     private void prepareMenu(ActionEvent event) throws RemoteException {
-        try {
-            restaurantOrderRemoteInterface.updateOrderStatus(selectedOrderId, "1");
-            setArrayListData();
-        } catch (Exception e) {
-            System.out.println("e");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Order");
+        alert.setContentText("You want to Prepare this order ?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+                 try {
+                System.out.println("selectedOrderId"+selectedOrderId);
+                restaurantOrderRemoteInterface.updateOrderStatus(selectedOrderId, "1");
+                System.out.println("Done with query");
+                setArrayListData();
+            } catch (Exception e) {
+
+            }
+
+        } else {
+
+            return;
         }
+
+
+
     }
 }

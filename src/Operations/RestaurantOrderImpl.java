@@ -151,6 +151,8 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
         return odrList;
     }
 
+
+
     /**
      * function to enter data to database
      *
@@ -195,12 +197,54 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
     @Override
     public void updateOrderStatus(String selectedOrderId, String updateValue) {
         try {
+            System.out.println("OOO"+selectedOrderId);
+            System.out.println("OOO1"+updateValue);
             DBConnect db = new DBConnect();
-            String query = "update advjavarmi.orders set orderStatus='"+updateValue+"' where OrderID='"+selectedOrderId+"';";
+            String query = "update Orders set orderStatus='"+updateValue+"' where OrderID='"+selectedOrderId+"';";
             db.setData(query);
         } catch (Exception e) {
             System.out.println("exception:" + e.toString());
         }
+    }
+
+    @Override
+    public ArrayList<String> dbCustomerTableData(String orderId) throws RemoteException {
+
+        ArrayList<String> odrList = new ArrayList<>();
+        try {
+            Class.forName(JDBC_DRIVER);
+            Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from customerDetails where cusID=" + orderId);
+            while (rs.next()) {
+                odrList.add(rs.getString(2));
+                odrList.add(rs.getString(3));
+
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println("db exception:" + e.toString());
+        }
+        return odrList;
+    }
+
+    @Override
+    public ArrayList<String> dbOrderData(String orderId) throws RemoteException {
+        ArrayList<String> odrList = new ArrayList<>();
+        try {
+            Class.forName(JDBC_DRIVER);
+            Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from Orders where OrderID=" + orderId);
+            while (rs.next()) {
+                odrList.add(rs.getString(2));
+                odrList.add(rs.getString(3));
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println("db exception:" + e.toString());
+        }
+        return odrList;
     }
 
     public void initialDBUpload() throws SQLException {
@@ -213,7 +257,7 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
             while ((line = br.readLine()) != null) {
                 // use comma as separator
                 String[] food = line.split(cvsSplitBy);
-                System.out.println("food:" + Arrays.toString(food));
+
 
                 DBConnect dbConnect = new DBConnect();
 

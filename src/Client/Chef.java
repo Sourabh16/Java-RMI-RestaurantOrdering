@@ -33,8 +33,12 @@ public class Chef extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Views/chef.fxml"));
         primaryStage.setTitle("SwinRestaurant - Chef Application");
-        primaryStage.setScene(new Scene(root, 1310, 950));
+        primaryStage.setScene(new Scene(root, 1310, 750));
         primaryStage.show();
+    }
+
+    public void run(String[] args){
+        launch(args);
     }
 
     public static void main(String[] args) {

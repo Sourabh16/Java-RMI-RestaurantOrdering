@@ -101,6 +101,13 @@ public class customerController implements Initializable {
                 restaurantOrderRemoteInterface.insertOrderDataToDB(toogleGroupValue, cusName.getText(), cusTable.getText(),
                         foodID.getSelectionModel().getSelectedItem(), BeveragesID.getSelectionModel().getSelectedItem());
                 BTdisplayOrder.setDisable(false);
+
+                if(!BTdisplayOrder.isDisabled())
+                {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Order Placed Successfully ", ButtonType.CLOSE);
+                    alert.showAndWait();
+                    return;
+                }
             }
         } catch (RemoteException e) {
             System.out.println("exception:" + e.toString());
@@ -112,7 +119,7 @@ public class customerController implements Initializable {
     @FXML
     private void validateDisplay(ActionEvent event) {
         try {
-            if (event.getSource() == BTgetDropDown) {
+
                 ObservableList<String> drFood = FXCollections.observableArrayList();        // observableList for food drop down
                 ObservableList<String> drBeverage = FXCollections.observableArrayList();    // observableList for food drop down
                 if (rdBrkfast.isSelected()) {
@@ -125,7 +132,7 @@ public class customerController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Select Menu : ", ButtonType.CLOSE);
                     alert.showAndWait();
                     //System.out.printf(cusName.getText());//testing line
-                }
+
             }
         } catch (RemoteException e) {
             System.out.println("exception:" + e.toString());
@@ -136,6 +143,20 @@ public class customerController implements Initializable {
     private void displayChoicesOperation(ActionEvent event) {
         try {
             if (event.getSource() == BTchoiceDisplay) {
+
+                if (!rdBrkfast.isSelected() && !rdLunch.isSelected() && !rdDinner.isSelected()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "select Menu : ", ButtonType.CLOSE);
+                    alert.showAndWait();
+                    //System.out.printf(cusName.getText());//testing line
+                    return;
+                } else if (event.getSource() == BTchoiceDisplay) {
+                    if (foodID.getSelectionModel().isEmpty() || BeveragesID.getSelectionModel().isEmpty()) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Select Food and Beverages : ", ButtonType.CLOSE);
+                        alert.showAndWait();
+                        //System.out.printf(cusName.getText());//testing line
+                        return;
+                    }
+                }else{
 
 //                Map<String, ArrayList<menuDetails>> strList = FXCollections.observableArrayList();
                 Map<String, ArrayList<menuDetails>> foodMap;
@@ -178,7 +199,7 @@ public class customerController implements Initializable {
                 tblDisplay.setItems(outputList);
                 tblDisplay.setVisible(true);
                 tblDisplay.getColumns().addAll(ItemNameCol, EnergyCol, ProtienCol, CarbohydrateCol, TotalFatCol, FibreCol, PriceCol);
-            }
+            }}
         } catch (Exception e) {
             System.out.println("exception:" + e.toString());
         }

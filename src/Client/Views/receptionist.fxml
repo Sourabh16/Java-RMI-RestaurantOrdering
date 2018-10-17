@@ -17,7 +17,7 @@
                      </font>
                  </Label>
 
-                 <Label layoutX="227.0" layoutY="61.0" text="Orders with Serving State" />
+                 <Label layoutX="72.0" layoutY="61.0" prefHeight="17.0" prefWidth="290.0" text="Orders with Serving State" />
                  <ListView fx:id="servingListView" layoutX="71.0" layoutY="88.0" prefHeight="312.0" prefWidth="1031.0" />
 
 

@@ -37,6 +37,10 @@ public class Client extends Application {
         primaryStage.show();
     }
 
+    public void run(String[] args){
+        launch(args);
+    }
+
     public static void main(String[] args) {
         try {
             // Getting the registry

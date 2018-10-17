@@ -24,4 +24,9 @@ public interface RestaurantOrderRemoteInterface extends Remote {
     ArrayList<order> getWaitingList(String statusValue) throws RemoteException;
 
     void updateOrderStatus(String selectedOrderId, String updateValue) throws RemoteException;
+
+    ArrayList<String>  dbCustomerTableData(String orderId) throws RemoteException;
+
+    ArrayList<String>  dbOrderData(String orderId) throws RemoteException;
+
 }
