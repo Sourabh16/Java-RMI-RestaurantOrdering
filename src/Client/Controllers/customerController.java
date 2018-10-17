@@ -102,8 +102,7 @@ public class customerController implements Initializable {
                         foodID.getSelectionModel().getSelectedItem(), BeveragesID.getSelectionModel().getSelectedItem());
                 BTdisplayOrder.setDisable(false);
 
-                if(!BTdisplayOrder.isDisabled())
-                {
+                if (!BTdisplayOrder.isDisabled()) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Order Placed Successfully ", ButtonType.CLOSE);
                     alert.showAndWait();
                     return;
@@ -120,18 +119,18 @@ public class customerController implements Initializable {
     private void validateDisplay(ActionEvent event) {
         try {
 
-                ObservableList<String> drFood = FXCollections.observableArrayList();        // observableList for food drop down
-                ObservableList<String> drBeverage = FXCollections.observableArrayList();    // observableList for food drop down
-                if (rdBrkfast.isSelected()) {
-                    setFoodBeverageProperties(drFood, drBeverage, "BreakFast");
-                } else if (rdLunch.isSelected()) {
-                    setFoodBeverageProperties(drFood, drBeverage, "Lunch");
-                } else if (rdDinner.isSelected()) {
-                    setFoodBeverageProperties(drFood, drBeverage, "Dinner");
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR, "Select Menu : ", ButtonType.CLOSE);
-                    alert.showAndWait();
-                    //System.out.printf(cusName.getText());//testing line
+            ObservableList<String> drFood = FXCollections.observableArrayList();        // observableList for food drop down
+            ObservableList<String> drBeverage = FXCollections.observableArrayList();    // observableList for food drop down
+            if (rdBrkfast.isSelected()) {
+                setFoodBeverageProperties(drFood, drBeverage, "BreakFast");
+            } else if (rdLunch.isSelected()) {
+                setFoodBeverageProperties(drFood, drBeverage, "Lunch");
+            } else if (rdDinner.isSelected()) {
+                setFoodBeverageProperties(drFood, drBeverage, "Dinner");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Select Menu : ", ButtonType.CLOSE);
+                alert.showAndWait();
+                //System.out.printf(cusName.getText());//testing line
 
             }
         } catch (RemoteException e) {
@@ -148,58 +147,57 @@ public class customerController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "select Menu : ", ButtonType.CLOSE);
                     alert.showAndWait();
                     //System.out.printf(cusName.getText());//testing line
-                    return;
                 } else if (event.getSource() == BTchoiceDisplay) {
                     if (foodID.getSelectionModel().isEmpty() || BeveragesID.getSelectionModel().isEmpty()) {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Select Food and Beverages : ", ButtonType.CLOSE);
                         alert.showAndWait();
                         //System.out.printf(cusName.getText());//testing line
-                        return;
-                    }
-                }else{
+                    } else {
 
 //                Map<String, ArrayList<menuDetails>> strList = FXCollections.observableArrayList();
-                Map<String, ArrayList<menuDetails>> foodMap;
-                ObservableList<menuDetails> outputList = FXCollections.observableArrayList();
+                        Map<String, ArrayList<menuDetails>> foodMap;
+                        ObservableList<menuDetails> outputList = FXCollections.observableArrayList();
 
 
-                foodMap = restaurantOrderRemoteInterface.getDisplayChoiceData(foodID.getSelectionModel().getSelectedItem(), BeveragesID.getSelectionModel().getSelectedItem());
+                        foodMap = restaurantOrderRemoteInterface.getDisplayChoiceData(foodID.getSelectionModel().getSelectedItem(), BeveragesID.getSelectionModel().getSelectedItem());
 
-                outputList.addAll(foodMap.get(FOOD_LIST));
-                outputList.addAll(foodMap.get(BEVERAGE_LIST));
+                        outputList.addAll(foodMap.get(FOOD_LIST));
+                        outputList.addAll(foodMap.get(BEVERAGE_LIST));
 
-                tblDisplay.setEditable(true);
-
-
-                TableColumn<menuDetails, String> ItemNameCol = new TableColumn<>("Item Name");
-                ItemNameCol.setMinWidth(200);
-                ItemNameCol.setCellValueFactory(new PropertyValueFactory<>("ItemName"));
-                TableColumn<menuDetails, String> EnergyCol = new TableColumn<>("Energy");
-                EnergyCol.setMinWidth(200);
-                EnergyCol.setCellValueFactory(new PropertyValueFactory<>("Energy"));
-                TableColumn<menuDetails, String> ProtienCol = new TableColumn<>("Protein");
-                ProtienCol.setMinWidth(200);
-                ProtienCol.setCellValueFactory(new PropertyValueFactory<>("Protein"));
-                TableColumn<menuDetails, String> CarbohydrateCol = new TableColumn<>("Carbohydrates");
-                CarbohydrateCol.setMinWidth(200);
-                CarbohydrateCol.setCellValueFactory(new PropertyValueFactory<>("Carbohydrates"));
-                TableColumn<menuDetails, String> TotalFatCol = new TableColumn<>("TotalFat");
-                TotalFatCol.setMinWidth(200);
-                TotalFatCol.setCellValueFactory(new PropertyValueFactory<>("TotalFat"));
-                TableColumn<menuDetails, String> FibreCol = new TableColumn<>("DietaryFibre");
-                FibreCol.setMinWidth(200);
-                FibreCol.setCellValueFactory(new PropertyValueFactory<>("DietaryFibre"));
-                TableColumn<menuDetails, String> PriceCol = new TableColumn<>("Price");
-                PriceCol.setMinWidth(200);
-                PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
-
-                //ItemDetails IDDetail=new ItemDetails("Total",strList.get(1).getEnergy());
+                        tblDisplay.setEditable(true);
 
 
-                tblDisplay.setItems(outputList);
-                tblDisplay.setVisible(true);
-                tblDisplay.getColumns().addAll(ItemNameCol, EnergyCol, ProtienCol, CarbohydrateCol, TotalFatCol, FibreCol, PriceCol);
-            }}
+                        TableColumn<menuDetails, String> ItemNameCol = new TableColumn<>("Item Name");
+                        ItemNameCol.setMinWidth(200);
+                        ItemNameCol.setCellValueFactory(new PropertyValueFactory<>("ItemName"));
+                        TableColumn<menuDetails, String> EnergyCol = new TableColumn<>("Energy");
+                        EnergyCol.setMinWidth(200);
+                        EnergyCol.setCellValueFactory(new PropertyValueFactory<>("Energy"));
+                        TableColumn<menuDetails, String> ProtienCol = new TableColumn<>("Protein");
+                        ProtienCol.setMinWidth(200);
+                        ProtienCol.setCellValueFactory(new PropertyValueFactory<>("Protein"));
+                        TableColumn<menuDetails, String> CarbohydrateCol = new TableColumn<>("Carbohydrates");
+                        CarbohydrateCol.setMinWidth(200);
+                        CarbohydrateCol.setCellValueFactory(new PropertyValueFactory<>("Carbohydrates"));
+                        TableColumn<menuDetails, String> TotalFatCol = new TableColumn<>("TotalFat");
+                        TotalFatCol.setMinWidth(200);
+                        TotalFatCol.setCellValueFactory(new PropertyValueFactory<>("TotalFat"));
+                        TableColumn<menuDetails, String> FibreCol = new TableColumn<>("DietaryFibre");
+                        FibreCol.setMinWidth(200);
+                        FibreCol.setCellValueFactory(new PropertyValueFactory<>("DietaryFibre"));
+                        TableColumn<menuDetails, String> PriceCol = new TableColumn<>("Price");
+                        PriceCol.setMinWidth(200);
+                        PriceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
+
+                        //ItemDetails IDDetail=new ItemDetails("Total",strList.get(1).getEnergy());
+
+
+                        tblDisplay.setItems(outputList);
+                        tblDisplay.setVisible(true);
+                        tblDisplay.getColumns().addAll(ItemNameCol, EnergyCol, ProtienCol, CarbohydrateCol, TotalFatCol, FibreCol, PriceCol);
+                    }
+                }
+            }
         } catch (Exception e) {
             System.out.println("exception:" + e.toString());
         }
