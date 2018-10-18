@@ -1,6 +1,6 @@
 package Client.Controllers;
 
-import Operations.RestaurantOrderRemoteInterface;
+import ServerWork.Operations.RestaurantOrderRemoteInterface;
 import Utility.ReadCSV;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -62,7 +62,7 @@ public class receptionistController implements Initializable {
             Registry registry = LocateRegistry.getRegistry(null);
 
             // Looking up the registry for the remote object  or unbundling or unmarshaling
-            restaurantOrderRemoteInterface = (RestaurantOrderRemoteInterface) registry.lookup("HelloAnimation_v1");
+            restaurantOrderRemoteInterface = (RestaurantOrderRemoteInterface) registry.lookup("advJavaRmi");
         } catch (RemoteException | NotBoundException e) {
             System.out.println("exception while getting interface" + e.toString());
         }
@@ -72,7 +72,7 @@ public class receptionistController implements Initializable {
     private void getTimerData(int time) {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
-        timeSeconds=time;
+        timeSeconds = time;
         // KeyFrame event handler
         timeline.getKeyFrames().add(
                 new KeyFrame(Duration.seconds(1),
@@ -124,8 +124,7 @@ public class receptionistController implements Initializable {
             servingListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 selectedOrderId = newValue.getOrderId();
             });
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("errr");
         }
 
@@ -142,23 +141,21 @@ public class receptionistController implements Initializable {
         }
     }
 
-    private void GenerateBill(String order)
-    {
+    private void GenerateBill(String order) {
         Document document = new Document();
-        try
-        {
+        try {
             ObservableList<menuDetails> items = FXCollections.observableArrayList();
-            ArrayList<String> temp= restaurantOrderRemoteInterface.dbCustomerTableData(order);
-            ArrayList<String> temp1= restaurantOrderRemoteInterface.dbOrderData(order);
-            ReadCSV rd=new ReadCSV();
-            String s1=temp1.get(0);
-            String s2=temp1.get(1);
-            items=rd.csvqueryLoadTableData(s1,s2);
+            ArrayList<String> temp = restaurantOrderRemoteInterface.dbCustomerTableData(order);
+            ArrayList<String> temp1 = restaurantOrderRemoteInterface.dbOrderData(order);
+            ReadCSV rd = new ReadCSV();
+            String s1 = temp1.get(0);
+            String s2 = temp1.get(1);
+            items = rd.csvqueryLoadTableData(s1, s2);
 
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("src/Client/Bills/Bill.pdf"));
             document.open();
-            document.add(new Paragraph("Invoice for the User: "+temp.get(0)));
-            document.add(new Paragraph("Table Number: "+temp.get(1)));
+            document.add(new Paragraph("Invoice for the User: " + temp.get(0)));
+            document.add(new Paragraph("Table Number: " + temp.get(1)));
             PdfPTable table = new PdfPTable(7);
             PdfPCell cell1 = new PdfPCell(new Paragraph("Item Name"));
             PdfPCell cell2 = new PdfPCell(new Paragraph("Energy"));
@@ -177,8 +174,7 @@ public class receptionistController implements Initializable {
             table.addCell(cell6);
             table.addCell(cell7);
 
-            for(int i=0;i<items.size();i++)
-            {
+            for (int i = 0; i < items.size(); i++) {
                 table.addCell(items.get(i).getItemName());
                 table.addCell(items.get(i).getEnergy());
                 table.addCell(items.get(i).getProtein());
@@ -194,7 +190,7 @@ public class receptionistController implements Initializable {
             document.close();
             writer.close();
             File f = new File("src/Client/Bills/Bill.pdf");
-            if(f.exists()) {
+            if (f.exists()) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Bill Generated under Bills Folder ", ButtonType.CLOSE);
                 alert.showAndWait();
                 //System.out.printf(cusName.getText());//testing line
@@ -202,11 +198,9 @@ public class receptionistController implements Initializable {
 
                 return;
             }
-        } catch (DocumentException e)
-        {
+        } catch (DocumentException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (RemoteException e) {
             e.printStackTrace();

@@ -2,7 +2,7 @@ package Client;
 /*Operations.Client.Operations.Client Program
 Following is the client program of this application. Here, we are fetching the remote object and invoking its method named animation().*/
 
-import Operations.RestaurantOrderRemoteInterface;
+import ServerWork.Operations.RestaurantOrderRemoteInterface;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +13,25 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class Client extends Application {
+
+    public static void main(String[] args) {
+        try {
+            // Getting the registry
+            Registry registry = LocateRegistry.getRegistry(null);
+
+            // Looking up the registry for the remote object  or unbundling or unmarshaling
+            RestaurantOrderRemoteInterface stub = (RestaurantOrderRemoteInterface) registry.lookup("advJavaRmi");
+
+            // Calling the remote method using the obtained object
+            stub.animation();
+
+            System.out.println("Remote method invoked");
+            launch(args);
+        } catch (Exception e) {
+            System.err.println("Operations.Client.Operations.Client exception: " + e.toString());
+            e.printStackTrace();
+        }
+    }
 
     /**
      * The main entry point for all JavaFX applications.
@@ -37,26 +56,7 @@ public class Client extends Application {
         primaryStage.show();
     }
 
-    public void run(String[] args){
+    public void run(String[] args) {
         launch(args);
-    }
-
-    public static void main(String[] args) {
-        try {
-            // Getting the registry
-            Registry registry = LocateRegistry.getRegistry(null);
-
-            // Looking up the registry for the remote object  or unbundling or unmarshaling
-            RestaurantOrderRemoteInterface stub = (RestaurantOrderRemoteInterface) registry.lookup("HelloAnimation_v1");
-
-            // Calling the remote method using the obtained object
-            stub.animation();
-
-            System.out.println("Remote method invoked");
-            launch(args);
-        } catch (Exception e) {
-            System.err.println("Operations.Client.Operations.Client exception: " + e.toString());
-            e.printStackTrace();
-        }
     }
 }

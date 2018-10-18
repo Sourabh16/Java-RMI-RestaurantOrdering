@@ -2,19 +2,14 @@ package Client;
 /*Operations.Client.Operations.Client Program
 Following is the client program of this application. Here, we are fetching the remote object and invoking its method named animation().*/
 
-import Operations.RestaurantOrderRemoteInterface;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import Client.Client;
+import ServerWork.Operations.RestaurantOrderRemoteInterface;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Scanner;
 
-public class main  {
-
+public class main {
 
 
     public static void main(String[] args) {
@@ -23,7 +18,7 @@ public class main  {
             Registry registry = LocateRegistry.getRegistry(null);
 
             // Looking up the registry for the remote object  or unbundling or unmarshaling
-            RestaurantOrderRemoteInterface stub = (RestaurantOrderRemoteInterface) registry.lookup("HelloAnimation_v1");
+            RestaurantOrderRemoteInterface stub = (RestaurantOrderRemoteInterface) registry.lookup("advJavaRmi");
 
             // Calling the remote method using the obtained object
             stub.animation();
@@ -37,8 +32,7 @@ public class main  {
         }
     }
 
-    public static int menu()
-    {
+    public static int menu() {
         System.out.println("1. Customer");
         System.out.println("2. Chef");
         System.out.println("3. Receptionist");
@@ -50,35 +44,33 @@ public class main  {
         return a;
     }
 
-    public static void run(String[] args)
-    {
-        try
-        {
-            while (true)
-            {
-                switch (menu())
-                {
-                    case 1: Client client=new Client();
+    public static void run(String[] args) {
+        try {
+            while (true) {
+                switch (menu()) {
+                    case 1:
+                        Client client = new Client();
                         client.run(args);
                         break;
 
 
-                    case 2: Chef chef=new Chef();
+                    case 2:
+                        Chef chef = new Chef();
                         chef.run(args);
                         break;
 
 
-                    case 3: Receptionist receptionist=new Receptionist();
+                    case 3:
+                        Receptionist receptionist = new Receptionist();
                         receptionist.run(args);
                         break;
 
-                    default:System.out.println("Invalid option");
+                    default:
+                        System.out.println("Invalid option");
                         break;
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Something wrong !! Please try again.");
 
         }

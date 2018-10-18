@@ -1,4 +1,4 @@
-package Operations;
+package ServerWork.Operations;
 
 import Utility.DBConnect;
 import Utility.ReadCSV;
@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -152,7 +151,6 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
     }
 
 
-
     /**
      * function to enter data to database
      *
@@ -178,7 +176,7 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
         try {
             DBConnect db = new DBConnect();
             String query = "SELECT c.cusName, c.cusTable, o.FoodName,o.BeverageName, o.OrderID, o.orderStatus" +
-                    "  FROM Orders o, customerDetails c where orderStatus='"+statusValue+"' AND cusID=OrderID";
+                    "  FROM Orders o, customerDetails c where orderStatus='" + statusValue + "' AND cusID=OrderID";
             ResultSet rs = db.getData(query);
 
 
@@ -197,10 +195,10 @@ public class RestaurantOrderImpl implements RestaurantOrderRemoteInterface {
     @Override
     public void updateOrderStatus(String selectedOrderId, String updateValue) {
         try {
-            System.out.println("OOO"+selectedOrderId);
-            System.out.println("OOO1"+updateValue);
+            System.out.println("OOO" + selectedOrderId);
+            System.out.println("OOO1" + updateValue);
             DBConnect db = new DBConnect();
-            String query = "update Orders set orderStatus='"+updateValue+"' where OrderID='"+selectedOrderId+"';";
+            String query = "update Orders set orderStatus='" + updateValue + "' where OrderID='" + selectedOrderId + "';";
             db.setData(query);
         } catch (Exception e) {
             System.out.println("exception:" + e.toString());

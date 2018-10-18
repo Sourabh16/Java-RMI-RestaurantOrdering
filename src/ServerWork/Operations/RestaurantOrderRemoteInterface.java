@@ -1,4 +1,4 @@
-package Operations;
+package ServerWork.Operations;
 
 import pojo.menuDetails;
 import pojo.order;
@@ -25,8 +25,8 @@ public interface RestaurantOrderRemoteInterface extends Remote {
 
     void updateOrderStatus(String selectedOrderId, String updateValue) throws RemoteException;
 
-    ArrayList<String>  dbCustomerTableData(String orderId) throws RemoteException;
+    ArrayList<String> dbCustomerTableData(String orderId) throws RemoteException;
 
-    ArrayList<String>  dbOrderData(String orderId) throws RemoteException;
+    ArrayList<String> dbOrderData(String orderId) throws RemoteException;
 
 }

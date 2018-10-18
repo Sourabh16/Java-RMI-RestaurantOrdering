@@ -1,6 +1,6 @@
 package Client.Controllers;
 
-import Operations.RestaurantOrderRemoteInterface;
+import ServerWork.Operations.RestaurantOrderRemoteInterface;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,7 +59,7 @@ public class customerController implements Initializable {
             Registry registry = LocateRegistry.getRegistry(null);
 
             // Looking up the registry for the remote object  or unbundling or unmarshaling
-            restaurantOrderRemoteInterface = (RestaurantOrderRemoteInterface) registry.lookup("HelloAnimation_v1");
+            restaurantOrderRemoteInterface = (RestaurantOrderRemoteInterface) registry.lookup("advJavaRmi");
         } catch (RemoteException | NotBoundException e) {
             System.out.println("exception while getting interface" + e.toString());
         }

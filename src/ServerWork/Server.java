@@ -3,8 +3,8 @@ An RMI server program should implement the remote interface or extend the implem
 
 Following is the server program of this application. Here, we will extend the above created class, create a remote object, and registered it to the RMI registry with the bind name hello. */
 
-import Operations.RestaurantOrderImpl;
-import Operations.RestaurantOrderRemoteInterface;
+import ServerWork.Operations.RestaurantOrderImpl;
+import ServerWork.Operations.RestaurantOrderRemoteInterface;
 
 import java.rmi.RMISecurityManager;
 import java.rmi.registry.LocateRegistry;
@@ -38,11 +38,11 @@ public class Server extends RestaurantOrderImpl {
             Registry registry = LocateRegistry.getRegistry();
 
             // binding or bundling or marshaling
-            registry.rebind("HelloAnimation_v1", stub);
+            registry.rebind("advJavaRmi", stub);
             System.out.println("Server ready");
 
 
-            RestaurantOrderImpl impl=new RestaurantOrderImpl();
+            RestaurantOrderImpl impl = new RestaurantOrderImpl();
             impl.clearMenuDb();
             impl.initialDBUpload();
 
